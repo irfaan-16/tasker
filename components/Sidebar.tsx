@@ -1,27 +1,26 @@
+"use client";
+import { useSession } from "next-auth/react";
+import BoardsView from "./BoardsView";
+interface User {
+  name: string;
+  email: string;
+  image: string;
+  dbID: string;
+}
+interface Session {
+  user: User;
+  expires: string;
+}
 const Sidebar = () => {
+  const sessionData = useSession();
+  const session: Session | null = sessionData.data as Session | null;
+  console.log(session?.user, "user");
+
   return (
     <div className="bg-[rgba(255,255,255,0.05)] p-4 rounded-md">
       <h3 className="mb-4 font-bold text-xl">All boards (3)</h3>
-      <div>
-        <ul className="flex flex-col gap-2">
-          <li className="p-2 cursor-pointer bg-purple-600 rounded-full">
-            Platform Launch
-          </li>
-          <li className="p-2 cursor-pointer bg-purple-600 rounded-full">
-            Marketing Plan
-          </li>
-          <li className="p-2 cursor-pointer bg-purple-600 rounded-full">
-            Roadmap
-          </li>
-          <li className="p-2 cursor-pointer bg-purple-600 rounded-full">
-            Java
-          </li>
 
-          <li className="p-2 cursor-pointer bg-purple-600 rounded-full">
-            <button>Create New Board</button>
-          </li>
-        </ul>
-      </div>
+      <BoardsView userId={session?.user.dbID!} />
     </div>
   );
 };
