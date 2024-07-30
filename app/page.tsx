@@ -1,7 +1,10 @@
 import Column from "@/components/Column";
 import Sidebar from "@/components/Sidebar";
+import { sql } from "@vercel/postgres";
+export default async function Home() {
+  const { rows } = await sql`SELECT * from USERS`;
+  console.log(rows);
 
-export default function Home() {
   return (
     <main className="flex min-h-screen p-10 gap-10">
       <Sidebar />
